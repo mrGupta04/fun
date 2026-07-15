@@ -1,0 +1,1037 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#ffe0e8" />
+  <title>Will you be my sweetheart? 💕</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,700;1,9..144,500&family=Outfit:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --blush: #ffd6e0;
+      --rose: #f28ca0;
+      --berry: #8b2e4a;
+      --ink: #3a1a28;
+      --yes: #d64d6f;
+      --yes-deep: #b83a5a;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html, body {
+      min-height: 100%;
+      min-height: 100dvh;
+    }
+
+    body {
+      font-family: "Outfit", sans-serif;
+      color: var(--ink);
+      overflow-x: hidden;
+      overflow-y: auto;
+      -webkit-text-size-adjust: 100%;
+      touch-action: manipulation;
+      background:
+        radial-gradient(ellipse 120% 80% at 10% 20%, #ffd4c8 0%, transparent 50%),
+        radial-gradient(ellipse 100% 90% at 90% 10%, #ffb8c9 0%, transparent 45%),
+        radial-gradient(ellipse 80% 70% at 50% 100%, #ffc4a8 0%, transparent 55%),
+        linear-gradient(165deg, #fff0eb 0%, #ffe0e8 40%, #ffd5c8 100%);
+      background-attachment: fixed;
+    }
+
+    body.is-chasing {
+      overflow: hidden;
+      height: 100dvh;
+      touch-action: none;
+    }
+
+    .ambiance {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    .petal {
+      position: absolute;
+      width: 12px;
+      height: 16px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--rose));
+      border-radius: 50% 50% 50% 0;
+      opacity: 0.55;
+      animation: drift linear infinite;
+    }
+
+    .float-emoji {
+      position: absolute;
+      font-size: clamp(1.1rem, 3vw, 1.7rem);
+      opacity: 0.55;
+      animation: drift linear infinite;
+      filter: drop-shadow(0 4px 8px rgba(139, 46, 74, 0.12));
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translateY(-10vh) rotate(0deg) translateX(0);
+        opacity: 0;
+      }
+      10% { opacity: 0.55; }
+      90% { opacity: 0.4; }
+      100% {
+        transform: translateY(110vh) rotate(360deg) translateX(40px);
+        opacity: 0;
+      }
+    }
+
+    .stage {
+      position: relative;
+      z-index: 1;
+      min-height: 100dvh;
+      display: grid;
+      place-items: center;
+      padding:
+        max(1rem, env(safe-area-inset-top))
+        max(1rem, env(safe-area-inset-right))
+        max(1.25rem, env(safe-area-inset-bottom))
+        max(1rem, env(safe-area-inset-left));
+    }
+
+    .ask,
+    .celebrate {
+      width: min(100%, 40rem);
+      text-align: center;
+    }
+
+    .ask[hidden],
+    .celebrate[hidden] {
+      display: none;
+    }
+
+    .mascot {
+      font-size: clamp(2.4rem, 8vw, 3.4rem);
+      line-height: 1;
+      margin-bottom: 0.55rem;
+      animation: bounce-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) both, wobble 2.8s ease-in-out 1s infinite;
+    }
+
+    @keyframes bounce-in {
+      from {
+        opacity: 0;
+        transform: scale(0.6) translateY(12px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes wobble {
+      0%, 100% { transform: rotate(-4deg); }
+      50% { transform: rotate(4deg); }
+    }
+
+    .eyebrow {
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: color-mix(in srgb, var(--berry) 65%, transparent);
+      margin-bottom: 0.75rem;
+      animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.05s both;
+    }
+
+    .brand {
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      font-weight: 500;
+      font-size: clamp(2.2rem, 8vw, 3.9rem);
+      line-height: 1.1;
+      letter-spacing: -0.02em;
+      color: var(--berry);
+      margin-bottom: 0.9rem;
+      animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.1s both;
+    }
+
+    .prompt {
+      font-size: clamp(1.05rem, 2.8vw, 1.22rem);
+      font-weight: 400;
+      color: color-mix(in srgb, var(--ink) 72%, transparent);
+      max-width: 28rem;
+      margin: 0 auto 0.65rem;
+      line-height: 1.55;
+      min-height: 3.4em;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.16s both;
+    }
+
+    .prompt.is-swapping {
+      opacity: 0;
+      transform: translateY(6px);
+    }
+
+    .hint {
+      font-size: 0.95rem;
+      color: color-mix(in srgb, var(--ink) 52%, transparent);
+      margin-bottom: 1.1rem;
+      animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.22s both;
+    }
+
+    .dodge-meter {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      margin-bottom: 1.5rem;
+      padding: 0.4rem 0.85rem;
+      border-radius: 999px;
+      background: color-mix(in srgb, white 70%, var(--blush));
+      border: 1px solid color-mix(in srgb, var(--rose) 40%, white);
+      font-size: 0.9rem;
+      color: var(--berry);
+      animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.26s both;
+    }
+
+    .dodge-meter strong {
+      font-weight: 600;
+    }
+
+    .actions {
+      position: relative;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 1rem 1.25rem;
+      min-height: 5rem;
+      animation: rise-in 0.9s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both;
+    }
+
+    .btn {
+      appearance: none;
+      border: none;
+      cursor: pointer;
+      font-family: inherit;
+      font-weight: 600;
+      font-size: 1.05rem;
+      letter-spacing: 0.02em;
+      padding: 0.95rem 1.85rem;
+      min-height: 3rem;
+      border-radius: 999px;
+      -webkit-tap-highlight-color: transparent;
+      touch-action: manipulation;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, background 0.25s ease, padding 0.3s ease, font-size 0.3s ease;
+    }
+
+    .btn:focus-visible {
+      outline: 3px solid color-mix(in srgb, var(--berry) 45%, white);
+      outline-offset: 3px;
+    }
+
+    .btn-yes {
+      background: var(--yes);
+      color: white;
+      box-shadow: 0 10px 28px color-mix(in srgb, var(--yes) 35%, transparent);
+      z-index: 5;
+    }
+
+    .btn-yes:hover {
+      background: var(--yes-deep);
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .btn-yes:active {
+      transform: translateY(0) scale(0.98);
+    }
+
+    .btn-no {
+      position: relative;
+      z-index: 20;
+      background: color-mix(in srgb, white 70%, var(--blush));
+      color: var(--berry);
+      border: 1.5px solid color-mix(in srgb, var(--rose) 55%, white);
+      box-shadow: 0 8px 22px color-mix(in srgb, var(--rose) 22%, transparent);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      touch-action: none;
+      user-select: none;
+      white-space: nowrap;
+      min-width: 5.5rem;
+    }
+
+    .btn-no.is-running {
+      position: fixed;
+      transition: left 0.28s cubic-bezier(0.34, 1.4, 0.64, 1),
+                  top 0.28s cubic-bezier(0.34, 1.4, 0.64, 1),
+                  transform 0.2s ease;
+    }
+
+    .btn-no:hover {
+      transform: scale(1.02);
+    }
+
+    .no-spacer {
+      display: none;
+      min-width: 5.5rem;
+      min-height: 3.1rem;
+    }
+
+    .no-spacer.is-on {
+      display: inline-block;
+    }
+
+    .tease {
+      position: fixed;
+      z-index: 25;
+      pointer-events: none;
+      font-size: clamp(1rem, 2.8vw, 1.25rem);
+      font-weight: 600;
+      color: var(--berry);
+      background: color-mix(in srgb, white 88%, var(--blush));
+      padding: 0.5rem 0.95rem;
+      border-radius: 999px;
+      box-shadow: 0 8px 24px color-mix(in srgb, var(--rose) 25%, transparent);
+      animation: tease-pop 1.15s ease forwards;
+      white-space: nowrap;
+    }
+
+    @keyframes tease-pop {
+      0% {
+        opacity: 0;
+        transform: translate(-50%, -40%) scale(0.8);
+      }
+      20% {
+        opacity: 1;
+        transform: translate(-50%, -100%) scale(1);
+      }
+      80% {
+        opacity: 1;
+        transform: translate(-50%, -125%) scale(1);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(-50%, -150%) scale(0.95);
+      }
+    }
+
+    @keyframes rise-in {
+      from {
+        opacity: 0;
+        transform: translateY(18px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .celebrate {
+      animation: celebrate-in 0.85s cubic-bezier(0.22, 1, 0.36, 1) both;
+      width: min(100%, 40rem);
+      padding: 0.25rem 0 1.5rem;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    @keyframes celebrate-in {
+      from {
+        opacity: 0;
+        transform: scale(0.92) translateY(16px);
+      }
+      to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    .heart-burst {
+      font-size: clamp(2.6rem, 8vw, 3.6rem);
+      margin-bottom: 0.5rem;
+      animation: heartbeat 1.2s ease-in-out infinite;
+    }
+
+    @keyframes heartbeat {
+      0%, 100% { transform: scale(1); }
+      15% { transform: scale(1.18); }
+      30% { transform: scale(1); }
+      45% { transform: scale(1.12); }
+      60% { transform: scale(1); }
+    }
+
+    .celebrate .eyebrow {
+      animation: none;
+    }
+
+    .celebrate h2 {
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      font-weight: 700;
+      font-size: clamp(1.85rem, 6vw, 2.9rem);
+      color: var(--berry);
+      line-height: 1.18;
+      margin-bottom: 1rem;
+    }
+
+    .love-note {
+      font-size: clamp(1.02rem, 2.6vw, 1.16rem);
+      line-height: 1.7;
+      color: color-mix(in srgb, var(--ink) 78%, transparent);
+      max-width: 32rem;
+      margin: 0 auto 1.15rem;
+      text-align: left;
+    }
+
+    .love-note p + p {
+      margin-top: 0.85rem;
+    }
+
+    .love-note em {
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      color: var(--yes-deep);
+      font-weight: 500;
+    }
+
+    .perks-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--berry);
+      margin-bottom: 0.65rem;
+    }
+
+    .perks {
+      list-style: none;
+      text-align: left;
+      max-width: 30rem;
+      margin: 0 auto 1.35rem;
+      display: grid;
+      gap: 0.55rem;
+    }
+
+    .perks li {
+      font-size: 0.98rem;
+      line-height: 1.45;
+      color: color-mix(in srgb, var(--ink) 80%, transparent);
+      padding: 0.55rem 0.75rem;
+      border-radius: 0.85rem;
+      background: color-mix(in srgb, white 55%, transparent);
+    }
+
+    .finale {
+      font-family: "Fraunces", serif;
+      font-style: italic;
+      font-size: clamp(1.15rem, 3vw, 1.4rem);
+      color: var(--berry);
+      line-height: 1.4;
+    }
+
+    .stats {
+      margin-top: 1.15rem;
+      font-size: 0.9rem;
+      color: color-mix(in srgb, var(--ink) 55%, transparent);
+    }
+
+    .confetti {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 30;
+      overflow: hidden;
+    }
+
+    .confetti span {
+      position: absolute;
+      top: -20px;
+      width: 10px;
+      height: 14px;
+      border-radius: 2px;
+      animation: confetti-fall linear forwards;
+    }
+
+    .confetti .emoji-bit {
+      background: none !important;
+      font-size: 1.35rem;
+      width: auto !important;
+      height: auto !important;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(110vh) rotate(720deg);
+        opacity: 0.85;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .stage {
+        align-content: center;
+        padding:
+          max(0.75rem, env(safe-area-inset-top))
+          max(0.85rem, env(safe-area-inset-right))
+          max(1rem, env(safe-area-inset-bottom))
+          max(0.85rem, env(safe-area-inset-left));
+      }
+
+      .mascot {
+        font-size: 2.2rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .eyebrow {
+        font-size: 0.72rem;
+        letter-spacing: 0.06em;
+        margin-bottom: 0.5rem;
+      }
+
+      .brand {
+        font-size: clamp(1.75rem, 8.5vw, 2.35rem);
+        margin-bottom: 0.65rem;
+      }
+
+      .prompt {
+        font-size: 0.98rem;
+        min-height: 0;
+        margin-bottom: 0.5rem;
+        max-width: 100%;
+      }
+
+      .hint {
+        font-size: 0.88rem;
+        margin-bottom: 0.75rem;
+      }
+
+      .dodge-meter {
+        margin-bottom: 1.1rem;
+        font-size: 0.84rem;
+        padding: 0.35rem 0.75rem;
+      }
+
+      .actions {
+        flex-direction: column;
+        width: 100%;
+        gap: 0.85rem;
+        min-height: 0;
+      }
+
+      .btn {
+        width: min(100%, 18rem);
+        padding: 1rem 1.25rem;
+        font-size: 1.05rem;
+        min-height: 3.25rem;
+      }
+
+      .btn-yes {
+        order: 1;
+      }
+
+      .btn-no {
+        order: 2;
+        width: min(100%, 18rem);
+      }
+
+      .btn-no.is-running {
+        width: auto;
+        min-width: 7rem;
+      }
+
+      .no-spacer.is-on {
+        display: none;
+      }
+
+      .btn-yes:hover {
+        transform: none;
+      }
+
+      .celebrate h2 {
+        font-size: clamp(1.55rem, 7vw, 2.1rem);
+      }
+
+      .love-note,
+      .perks {
+        text-align: center;
+      }
+
+      .love-note {
+        font-size: 0.98rem;
+      }
+
+      .perks li {
+        font-size: 0.92rem;
+        text-align: left;
+      }
+
+      .tease {
+        white-space: normal;
+        max-width: min(78vw, 16rem);
+        text-align: center;
+        font-size: 0.95rem;
+        padding: 0.45rem 0.75rem;
+      }
+
+      .finale {
+        font-size: 1.1rem;
+        padding: 0 0.25rem;
+      }
+
+      .stats {
+        font-size: 0.82rem;
+        padding: 0 0.5rem 0.5rem;
+      }
+    }
+
+    @media (max-height: 700px) and (max-width: 640px) {
+      .mascot {
+        font-size: 1.85rem;
+      }
+
+      .brand {
+        font-size: 1.65rem;
+      }
+
+      .prompt {
+        font-size: 0.9rem;
+      }
+
+      .hint {
+        display: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="ambiance" id="ambiance" aria-hidden="true"></div>
+
+  <main class="stage">
+    <section class="ask" id="ask" aria-labelledby="question">
+      <div class="mascot" id="mascot" aria-hidden="true">🥰💘</div>
+      <p class="eyebrow">💌 Urgent romantic business 💌</p>
+      <h1 class="brand" id="question">Will you be my sweetheart? 💕</h1>
+      <p class="prompt" id="prompt">
+        ⚠️ Side effects of YES may include: butterflies 🦋, silly grins 😄, and texting me first 📱💕
+      </p>
+      <p class="hint" id="hint">😏 Tip: the No button is athletic. Yes is emotionally available.</p>
+      <div class="dodge-meter" id="dodgeMeter">🏃 Dodge count: <strong id="dodgeNum">0</strong></div>
+      <div class="actions" id="actions">
+        <button type="button" class="btn btn-yes" id="yesBtn">Yes 💖</button>
+        <button type="button" class="btn btn-no" id="noBtn">No 🙅</button>
+        <span class="no-spacer" id="noSpacer" aria-hidden="true"></span>
+      </div>
+    </section>
+
+    <section class="celebrate" id="celebrate" hidden aria-live="polite">
+      <div class="heart-burst" id="heartBurst" aria-hidden="true">🎉💖🥳</div>
+      <p class="eyebrow">🏆 Mission accomplished 🏆</p>
+      <h2 id="celebTitle">Aww. You said yes.</h2>
+      <div class="love-note" id="loveNote"></div>
+      <p class="perks-title" id="perksTitle">🎁 Your sweetheart starter pack:</p>
+      <ul class="perks" id="perks"></ul>
+      <p class="finale" id="finale"></p>
+      <p class="stats" id="stats"></p>
+    </section>
+  </main>
+
+  <div class="confetti" id="confetti" aria-hidden="true"></div>
+
+  <script>
+    const noBtn = document.getElementById("noBtn");
+    const yesBtn = document.getElementById("yesBtn");
+    const noSpacer = document.getElementById("noSpacer");
+    const ask = document.getElementById("ask");
+    const celebrate = document.getElementById("celebrate");
+    const confetti = document.getElementById("confetti");
+    const ambiance = document.getElementById("ambiance");
+    const promptEl = document.getElementById("prompt");
+    const hintEl = document.getElementById("hint");
+    const mascot = document.getElementById("mascot");
+    const dodgeNum = document.getElementById("dodgeNum");
+
+    let dodgeCount = 0;
+    let lastMove = 0;
+    let isRunning = false;
+
+    const floatEmojis = ["💕", "💖", "💗", "✨", "🌸", "🦋", "💘", "💞", "⭐", "🥰", "🎀", "😻"];
+
+    const noLabels = [
+      "No 🙅",
+      "Nope 😅",
+      "Nice try 😏",
+      "Too slow 🏃",
+      "Almost... 🤏",
+      "Catch me! 😜",
+      "Still no 💅",
+      "Psych! 👻",
+      "You wish 😂",
+      "Nope² 🚫",
+      "Error 404 💻",
+      "Try Yes 👉💖",
+      "I'm shy 🙈",
+      "Can't touch this 🎤",
+      "Impossible 🦄",
+      "Nope forever ♾️",
+      "Zigzag mode 🌀",
+    ];
+
+    const yesLabels = [
+      "Yes 💖",
+      "Yes please! 🥺",
+      "Okay fine, YES 😍",
+      "YES (smart choice) 🧠💕",
+      "YES YES YES 🔥",
+      "Marry— wait YES 💍",
+      "I'm yours 💘",
+      "CLICK MEEE 👆💖",
+      "BEST BUTTON 🏆",
+    ];
+
+    const yesLabelsMobile = [
+      "Yes 💖",
+      "Yes please! 🥺",
+      "Okay, YES 😍",
+      "Smart choice 💕",
+      "YES YES YES 🔥",
+      "YES 💍",
+      "I'm yours 💘",
+      "CLICK ME 👆",
+      "BEST BTN 🏆",
+    ];
+
+    function isMobile() {
+      return window.matchMedia("(max-width: 640px)").matches || "ontouchstart" in window;
+    }
+
+    function viewportSize() {
+      const vv = window.visualViewport;
+      return {
+        width: vv ? vv.width : window.innerWidth,
+        height: vv ? vv.height : window.innerHeight,
+        offsetLeft: vv ? vv.offsetLeft : 0,
+        offsetTop: vv ? vv.offsetTop : 0,
+      };
+    }
+
+    function safePad() {
+      return isMobile() ? 20 : 16;
+    }
+
+    const mascots = ["🥰💘", "😳💗", "🤭💕", "😼💅", "🫣💖", "😜💘", "😭💗", "🫡💕", "🥵💖", "😇💘"];
+
+    const prompts = [
+      "⚠️ Side effects of YES may include: butterflies 🦋, silly grins 😄, and texting me first 📱💕",
+      "🏃 That No button just started cardio. Impressive. Unnecessary. 😂",
+      "🔥 Fun fact: rejecting me burns more calories than accepting me 🍟💔",
+      "👆 At this point you're not saying no… you're just training for the Olympics 🏅",
+      "🧪 Scientists confirm: Yes is faster, cuter, and emotionally available 💖",
+      "🚓 The No button filed a restraining order… against YOU 😭",
+      "💘 Okay the chase is cute, but my heart is getting impatient ⏳",
+      "🎬 Plot twist: No was never an option. I programmed destiny 😈💻",
+      "👉 You're so close to happiness. Big pink button. Right there. 💖✨",
+      "🫡 I respect the hustle. I respect Yes more. Press itttt 🥺",
+      "🧠 Your brain: chase No. Your heart: PRESS YES. Choose wisely 💕",
+      "😭 This is emotional damage for both of us. Just say yes already!",
+    ];
+
+    const hints = [
+      "😏 Tip: the No button is athletic. Yes is emotionally available.",
+      "🏃 Pro tip: chasing No = cardio. Clicking Yes = romance 💕",
+      "📢 Breaking news: Yes button grows when ignored (emotionally) 📈",
+      "🎮 Side quest unlocked: catch No (spoiler: you can't) 😈",
+      "🏅 Achievement progress: Professional Button Dodger 🥇",
+      "📣 Your future self is screaming: JUST PRESS YES 😭💖",
+      "💅 No said 'bye' and left the group chat",
+      "🫠 Okay this is getting personal. Yes is jealous now.",
+    ];
+
+    const teaseLines = [
+      "Too slow! 💨",
+      "Missed me! 😜",
+      "Nope! 🙅",
+      "Hehe~ 🤭",
+      "Nice try cutie 💕",
+      "Over here! 👉",
+      "Almost! 🤏",
+      "Think again 🧠",
+      "Not today 💅",
+      "Try harder 😤",
+      "Zoom! 🚀",
+      "Bye bye 👋",
+      "Can't catch love 💘",
+      "Skill issue 😂",
+    ];
+
+    function spawnAmbiance() {
+      const mobile = window.matchMedia("(max-width: 640px)").matches;
+      const petalCount = mobile ? 5 : 12;
+      const emojiCount = mobile ? 6 : 16;
+
+      for (let i = 0; i < petalCount; i++) {
+        const petal = document.createElement("span");
+        petal.className = "petal";
+        petal.style.left = Math.random() * 100 + "%";
+        petal.style.animationDuration = 8 + Math.random() * 10 + "s";
+        petal.style.animationDelay = Math.random() * 8 + "s";
+        petal.style.width = 8 + Math.random() * 10 + "px";
+        petal.style.height = 10 + Math.random() * 12 + "px";
+        petal.style.opacity = String(0.3 + Math.random() * 0.3);
+        ambiance.appendChild(petal);
+      }
+
+      for (let i = 0; i < emojiCount; i++) {
+        const el = document.createElement("span");
+        el.className = "float-emoji";
+        el.textContent = floatEmojis[i % floatEmojis.length];
+        el.style.left = Math.random() * 100 + "%";
+        el.style.animationDuration = 9 + Math.random() * 12 + "s";
+        el.style.animationDelay = Math.random() * 10 + "s";
+        el.style.fontSize = 0.9 + Math.random() * 1.1 + "rem";
+        ambiance.appendChild(el);
+      }
+    }
+
+    function startRunning() {
+      if (isRunning) return;
+      isRunning = true;
+      document.body.classList.add("is-chasing");
+      const rect = noBtn.getBoundingClientRect();
+      noSpacer.style.width = rect.width + "px";
+      noSpacer.style.height = rect.height + "px";
+      noSpacer.classList.add("is-on");
+      noBtn.classList.add("is-running");
+      noBtn.style.left = rect.left + "px";
+      noBtn.style.top = rect.top + "px";
+      document.body.appendChild(noBtn);
+    }
+
+    function setPrompt(text) {
+      promptEl.classList.add("is-swapping");
+      setTimeout(() => {
+        promptEl.textContent = text;
+        promptEl.classList.remove("is-swapping");
+      }, 180);
+    }
+
+    function showTease(x, y) {
+      const el = document.createElement("div");
+      el.className = "tease";
+      el.textContent = teaseLines[Math.floor(Math.random() * teaseLines.length)];
+      const vp = viewportSize();
+      const clampedX = Math.min(Math.max(x, 60), vp.width - 60);
+      const clampedY = Math.min(Math.max(y, 80), vp.height - 40);
+      el.style.left = clampedX + "px";
+      el.style.top = clampedY + "px";
+      document.body.appendChild(el);
+      setTimeout(() => el.remove(), 1150);
+    }
+
+    function growYes() {
+      const mobile = isMobile();
+      const scale = Math.min(1 + dodgeCount * (mobile ? 0.04 : 0.07), mobile ? 1.28 : 1.65);
+      yesBtn.style.transform = `scale(${scale})`;
+      const labels = mobile ? yesLabelsMobile : yesLabels;
+      yesBtn.textContent = labels[Math.min(dodgeCount, labels.length - 1)];
+    }
+
+    function moveNoAway(fromX, fromY) {
+      const pad = safePad();
+      const vp = viewportSize();
+      const btnW = noBtn.offsetWidth;
+      const btnH = noBtn.offsetHeight;
+      const minLeft = pad + vp.offsetLeft;
+      const minTop = pad + vp.offsetTop;
+      const maxLeft = Math.max(minLeft, vp.offsetLeft + vp.width - btnW - pad);
+      const maxTop = Math.max(minTop, vp.offsetTop + vp.height - btnH - pad);
+      const minDist = isMobile() ? 110 : 150;
+
+      let left;
+      let top;
+      let tries = 0;
+
+      do {
+        left = minLeft + Math.random() * Math.max(1, maxLeft - minLeft);
+        top = minTop + Math.random() * Math.max(1, maxTop - minTop);
+        tries += 1;
+      } while (
+        tries < 16 &&
+        Math.hypot(left + btnW / 2 - fromX, top + btnH / 2 - fromY) < minDist
+      );
+
+      const yesRect = yesBtn.getBoundingClientRect();
+      const yesCx = yesRect.left + yesRect.width / 2;
+      const yesCy = yesRect.top + yesRect.height / 2;
+      if (Math.hypot(left + btnW / 2 - yesCx, top + btnH / 2 - yesCy) < (isMobile() ? 100 : 130)) {
+        left = left < vp.width / 2 ? maxLeft : minLeft;
+        top = top < vp.height / 2 ? maxTop : minTop;
+      }
+
+      noBtn.style.left = left + "px";
+      noBtn.style.top = top + "px";
+    }
+
+    function evade(e) {
+      const now = Date.now();
+      const cooldown = isMobile() ? 220 : 180;
+      if (now - lastMove < cooldown) return;
+      lastMove = now;
+
+      const point = e.touches ? e.touches[0] : e;
+      const x = point.clientX ?? window.innerWidth / 2;
+      const y = point.clientY ?? window.innerHeight / 2;
+
+      startRunning();
+      dodgeCount += 1;
+      dodgeNum.textContent = String(dodgeCount);
+      mascot.textContent = mascots[Math.min(dodgeCount, mascots.length - 1)];
+      noBtn.textContent = noLabels[Math.min(dodgeCount, noLabels.length - 1)];
+      moveNoAway(x, y);
+      showTease(x, y);
+      growYes();
+
+      if (dodgeCount < prompts.length) setPrompt(prompts[dodgeCount]);
+      if (dodgeCount < hints.length) {
+        hintEl.textContent = hints[dodgeCount];
+      } else if (dodgeCount === 9) {
+        hintEl.textContent = "😭 Okay bestie… the universe is begging you to click Yes 💖";
+      }
+    }
+
+    function buildCelebration() {
+      const title = document.getElementById("celebTitle");
+      const loveNote = document.getElementById("loveNote");
+      const perks = document.getElementById("perks");
+      const finale = document.getElementById("finale");
+      const stats = document.getElementById("stats");
+      const heartBurst = document.getElementById("heartBurst");
+
+      if (dodgeCount === 0) {
+        heartBurst.textContent = "⚡💖👑";
+        title.textContent = "Instant YES?! You're legendary 👑✨";
+      } else if (dodgeCount < 4) {
+        heartBurst.textContent = "🤭💕🎉";
+        title.textContent = "You played hard to get… for like 3 seconds 😂💕";
+      } else if (dodgeCount < 8) {
+        heartBurst.textContent = "🏃‍♂️💘🏁";
+        title.textContent = "Finally!! My heart can stop sprinting 😮‍💨💖";
+      } else {
+        heartBurst.textContent = "🏆🥵💞";
+        title.textContent = "You chased No like it owed you money 💸😂";
+      }
+
+      loveNote.innerHTML = `
+        <p>
+          From this exact second, you're officially my sweetheart 💘 —
+          my favorite notification 🔔, my softest thought ☁️, and the reason
+          I'll smile at my phone like an absolute fool 📱😌💕
+        </p>
+        <p>
+          I don't need perfect days. I just need <em>you</em> 🥰, snacks 🍕,
+          bad jokes 😂, late-night talks 🌙, and someone who laughs at my nonsense
+          (even when it's not funny… <em>especially</em> then 🤭).
+        </p>
+      `;
+
+      const perkItems = [
+        "💬 Unlimited compliments (including emergency mid-day boosts)",
+        "🧥 Official permission to steal my hoodies forever",
+        "🎟️ Priority seating in my heart (front row, no refunds)",
+        "✨ A partner who thinks you're unreal… because you are",
+        "🎧 Free emotional support + optional silly voice notes",
+        "🍕 Shared fries policy (yes, even the last one)",
+      ];
+
+      perks.innerHTML = perkItems.map((item) => `<li>${item}</li>`).join("");
+
+      finale.textContent =
+        "Thank you for saying yes 💖 You've upgraded my whole life to premium ✨👑";
+
+      if (dodgeCount === 0) {
+        stats.textContent = "📊 Dodges: 0 — clean accept. Absolute legend 🫡🔥";
+      } else if (dodgeCount === 1) {
+        stats.textContent = "📊 Dodges: 1 — you tested the system. Fair. 🧪";
+      } else {
+        stats.textContent = `📊 Dodges: ${dodgeCount} — No ran ${dodgeCount} laps 🏃 Yes still won 🏆💕`;
+      }
+    }
+
+    function onYes() {
+      ask.hidden = true;
+      noBtn.hidden = true;
+      document.body.classList.remove("is-chasing");
+      document.querySelectorAll(".tease").forEach((el) => el.remove());
+      buildCelebration();
+      celebrate.hidden = false;
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      rainConfetti();
+    }
+
+    function rainConfetti() {
+      const colors = ["#f28ca0", "#d64d6f", "#ffc9b5", "#8b2e4a", "#ffd6e0", "#fff7f4"];
+      const emojis = ["💕", "💖", "💗", "✨", "🌸", "🎉", "🦋", "💘", "⭐", "🥰", "💞", "🥳"];
+      const count = isMobile() ? 36 : 70;
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement("span");
+        piece.style.left = Math.random() * 100 + "%";
+        piece.style.animationDuration = 2.1 + Math.random() * 2.4 + "s";
+        piece.style.animationDelay = Math.random() * 0.7 + "s";
+
+        if (i % 3 === 0) {
+          piece.className = "emoji-bit";
+          piece.textContent = emojis[i % emojis.length];
+        } else {
+          piece.style.background = colors[i % colors.length];
+          piece.style.width = 7 + Math.random() * 8 + "px";
+          piece.style.height = 9 + Math.random() * 10 + "px";
+          piece.style.borderRadius = Math.random() > 0.5 ? "50%" : "2px";
+        }
+        confetti.appendChild(piece);
+      }
+      setTimeout(() => {
+        confetti.innerHTML = "";
+      }, 5500);
+    }
+
+    noBtn.addEventListener("mouseenter", (e) => {
+      if (isMobile()) return;
+      evade(e);
+    });
+    noBtn.addEventListener("mousemove", (e) => {
+      if (isMobile()) return;
+      evade(e);
+    });
+    noBtn.addEventListener("pointerdown", (e) => {
+      if (e.pointerType === "touch" || e.pointerType === "pen") {
+        e.preventDefault();
+        evade(e);
+      }
+    });
+    noBtn.addEventListener("touchstart", (e) => {
+      e.preventDefault();
+      evade(e);
+    }, { passive: false });
+    noBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      evade(e);
+    });
+
+    yesBtn.addEventListener("click", onYes);
+
+    window.addEventListener("resize", () => {
+      if (!ask.hidden && isRunning) moveNoAway(window.innerWidth / 2, window.innerHeight / 2);
+    });
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener("resize", () => {
+        if (!ask.hidden && isRunning) {
+          const vp = viewportSize();
+          moveNoAway(vp.width / 2, vp.height / 2);
+        }
+      });
+    }
+
+    spawnAmbiance();
+  </script>
+</body>
+</html>
